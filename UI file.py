@@ -61,11 +61,13 @@ class GuessingGame:
         self.guess_button = tk.Button(
             self.root,
             text="Guess!",
-            font=("Arial", 12, "bold"),
+            font=("Arial", 14, "bold"),
             bg="#4CAF50",
             fg="white",
             width=15,
-            command=self.check_guess
+            height=2,
+            command=self.check_guess,
+            cursor="hand2"
         )
         self.guess_button.pack(pady=10)
 
@@ -83,11 +85,13 @@ class GuessingGame:
         self.new_game_button = tk.Button(
             self.root,
             text="New Game",
-            font=("Arial", 11),
+            font=("Arial", 12, "bold"),
             bg="#2196F3",
             fg="white",
             width=15,
-            command=self.new_game
+            height=2,
+            command=self.new_game,
+            cursor="hand2"
         )
         self.new_game_button.pack(pady=10)
 
@@ -122,13 +126,16 @@ class GuessingGame:
             elif guess > self.secret_number:
                 self.feedback_label.config(text="Too high! Try again.", fg="orange")
             else:
+                self.root.config(bg="#FFD700")
                 self.feedback_label.config(
-                    text=f"🎉 Correct!\nYou guessed it in {self.attempts} attempts!",
-                    fg="green"
+                    text=f"🎉🎊 WINNER! 🎊🎉\nYou guessed it in {self.attempts} attempts!\n⭐ AMAZING! ⭐",
+                    fg="#FF1493",
+                    font=("Arial", 14, "bold")
                 )
                 self.guess_button.config(state=tk.DISABLED)
-                messagebox.showinfo("Winner!",
-                                    f"Congratulations! You guessed the number {self.secret_number} in {self.attempts} attempts!")
+                messagebox.showinfo("🎉 WINNER! 🎉",
+                                    f"🎊 CONGRATULATIONS! 🎊\n\nYou guessed the number {self.secret_number}\nin only {self.attempts} attempts!\n\nYou're a guessing champion! 🏆")
+                self.root.after(3000, lambda: self.root.config(bg="SystemButtonFace"))
                 return
 
             if self.attempts >= self.max_attempts:
